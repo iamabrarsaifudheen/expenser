@@ -1,10 +1,15 @@
-import 'package:expenser/screens/authentication/sign_in/sign_in.dart';
-import 'package:expenser/screens/authentication/sign_up/sign_up.dart';
-import 'package:expenser/screens/home.dart';
-import 'package:flutter/material.dart';
+import 'package:expenser/models/user.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  runApp(const MyApp());
+import 'package:expenser/services/auth.dart';
+import 'package:expenser/wrapper.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+Future<void> main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -13,17 +18,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-  
-    
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-      
-        fontFamily: 'Montserrat',
-        primaryColor: const Color(0xff2A979B),
+    return StreamProvider<UserModel?>.value(
+      catchError: (_,__)=>null,
+      initialData:null,
+      value: AuthService().user,
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          fontFamily: 'Montserrat',
+          primaryColor: const Color(0xff2A979B),
+        ),
+        home: const Wrapper(),
+        
       ),
-      home: const Home(),
     );
   }
 }
-

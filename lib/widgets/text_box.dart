@@ -24,6 +24,8 @@ class _TextBoxState extends State<TextBox> {
       controller: widget.controller,
       validator: widget.validator,
       obscureText: widget.type == 'password' ? true : false,
+    
+    keyboardType: widget.type=='amount'?TextInputType.number:TextInputType.name,
       decoration: InputDecoration(
           // suffixIcon: widget.type == 'password'
           //     ? Icon(Icons.remove_red_eye_outlined,color: Theme.of(context).primaryColor,)

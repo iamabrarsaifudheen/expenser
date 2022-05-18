@@ -35,6 +35,10 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   flutter_signin_button: ^2.0.0
+  firebase_auth: ^3.3.18
+  cloud_firestore: ^3.1.15
+  provider: ^6.0.2
+  firebase_core: ^1.17.0
 
 dev_dependencies:
   flutter_test:
@@ -62,6 +66,9 @@ flutter:
   assets:
     - assets/images/sign_in.png
     - assets/images/sign_up.png
+    - assets/images/income.png
+    - assets/images/expense.png
+    
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

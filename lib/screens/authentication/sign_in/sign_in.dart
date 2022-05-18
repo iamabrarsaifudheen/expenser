@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+  const SignIn({Key? key, required this.toggleView}) : super(key: key);
+  final Function toggleView;
 
   @override
   _SignInState createState() => _SignInState();
@@ -45,7 +46,8 @@ class _SignInState extends State<SignIn> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const EmailSignIn()),
+                    MaterialPageRoute(
+                        builder: (context) => const EmailSignIn()),
                   );
                 },
                 backgroundColor: Theme.of(context).primaryColor,
@@ -53,10 +55,7 @@ class _SignInState extends State<SignIn> {
               Center(
                 child: TextButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignUp()),
-                      );
+                      widget.toggleView();
                     },
                     child: Text("Not a member yet? Sign Up")),
               ),

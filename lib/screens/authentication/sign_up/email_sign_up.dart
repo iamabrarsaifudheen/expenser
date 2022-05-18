@@ -1,5 +1,8 @@
+import 'package:expenser/screens/home.dart';
+import 'package:expenser/services/auth.dart';
 import 'package:expenser/widgets/button.dart';
 import 'package:expenser/widgets/text_box.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class EmailSignUp extends StatefulWidget {
@@ -10,14 +13,24 @@ class EmailSignUp extends StatefulWidget {
 }
 
 class _EmailSignUpState extends State<EmailSignUp> {
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
-  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  bool _success = false;
+  late String _userEmail;
+
   @override
   Widget build(BuildContext context) {
-     var size = MediaQuery.of(context).size;
+    var size = MediaQuery.of(context).size;
     var height = size.height;
     var width = size.width;
     return Scaffold(
@@ -29,13 +42,13 @@ class _EmailSignUpState extends State<EmailSignUp> {
             child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 36, vertical: 50),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 36, vertical: 50),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
                         TextBox(
-                          type:'email',
+                          type: 'email',
                           hintText: "Enter your Email",
                           controller: _emailController,
                           validator: (String? value) {
@@ -47,7 +60,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                         ),
                         SizedBox(height: height / 40),
                         TextBox(
-                          type:'password',
+                          type: 'password',
                           hintText: "Enter your Password",
                           controller: _passwordController,
                           validator: (String? value) {
@@ -59,7 +72,7 @@ class _EmailSignUpState extends State<EmailSignUp> {
                         ),
                         SizedBox(height: height / 40),
                         TextBox(
-                          type:'username',
+                          type: 'username',
                           hintText: "Enter your username",
                           controller: _usernameController,
                           validator: (String? value) {
@@ -72,15 +85,19 @@ class _EmailSignUpState extends State<EmailSignUp> {
                         SizedBox(height: height / 20),
                         Button(
                           text: "SUBMIT",
-                          onPressed: () {
+                          onPressed: () async {
                             if (_formKey.currentState!.validate()) {
+                              await AuthService().registerWithEmailAndPassword(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim());
+
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Processing Data')),
+                                const SnackBar(content: Text('Welcome')),
                               );
+                              Navigator.pop(context);
                             }
                           },
-                        )
+                        ),
                       ],
                     ),
                   ),

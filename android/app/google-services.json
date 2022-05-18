@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1050549258536",
+    "project_id": "expenser-97f72",
+    "storage_bucket": "expenser-97f72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1050549258536:android:7124dd2ebc1d5a6e99e81d",
+        "android_client_info": {
+          "package_name": "com.example.expenser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1050549258536-fnik8ijr1gdgl7h04dtd7vl6aeg7koti.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAtBAnSROlu5oTU4wOVw-3auJ7reteO2vU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1050549258536-fnik8ijr1gdgl7h04dtd7vl6aeg7koti.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

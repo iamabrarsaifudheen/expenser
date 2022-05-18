@@ -1,4 +1,7 @@
+import 'package:expenser/screens/home.dart';
+import 'package:expenser/services/auth.dart';
 import 'package:expenser/widgets/button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:expenser/widgets/text_box.dart';
 
@@ -10,6 +13,13 @@ class EmailSignIn extends StatefulWidget {
 }
 
 class _EmailSignInState extends State<EmailSignIn> {
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -28,15 +38,14 @@ class _EmailSignInState extends State<EmailSignIn> {
             child: Form(
                 key: _formKey,
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 36, vertical: 50),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 36, vertical: 50),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
                         TextBox(
-                          
                           hintText: "Enter your Email",
-                          type:'email',
+                          type: 'email',
                           controller: _emailController,
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
@@ -47,7 +56,7 @@ class _EmailSignInState extends State<EmailSignIn> {
                         ),
                         SizedBox(height: height / 40),
                         TextBox(
-                          type:'password',
+                          type: 'password',
                           hintText: "Enter your Password",
                           controller: _passwordController,
                           validator: (String? value) {
@@ -60,14 +69,27 @@ class _EmailSignInState extends State<EmailSignIn> {
                         SizedBox(height: height / 20),
                         Button(
                           text: "LET ME IN",
-                          onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              dynamic result = await AuthService()
+                                  .signInWithEmailAndPassword(
+                                      _emailController.text.trim(),
+                                      _passwordController.text.trim());
+                              Navigator.pop(context);
+
+                              // if (FirebaseAuth.instance.currentUser != null) {
+                              //   print(FirebaseAuth.instance.currentUser?.uid);
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //         builder: (context) => const Home()),
+                              //   );
+                              // }
+
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Processing Data')),
+                                const SnackBar(content: Text("Welcome")),
                               );
                             }
-
                           },
                         )
                       ],
